@@ -1,0 +1,12 @@
+{
+  "name": "Neuro-Node",
+  "version": "0.1.0",
+  "description": "A quick node library for workign with NeuroSky headsets",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JohnSZhang/Neuro-Node.git"
+  },
+  "author": "John Zhang",
+  "license": "BSD",
+}
