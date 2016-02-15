@@ -1,12 +1,30 @@
 {
   "name": "Neuro-Node",
   "version": "0.1.0",
-  "description": "A quick node library for workign with NeuroSky headsets",
-  "main": "index.js",
+  "description": "Yet another node module for working with NeuroSky headsets",
   "repository": {
     "type": "git",
     "url": "git://github.com/JohnSZhang/Neuro-Node.git"
   },
-  "author": "John Zhang",
+  "author": {
+    "name": "John Zhang",
+    "email": "john.shimin.zhang@gmail.com"
+  },
   "license": "BSD",
+  "devDependencies": {
+    "serialport": "^3.6.0",
+  },
+  "dependencies": {
+    "serialport": "^3.6.0",
+  },
+  "keywords": [
+    "node",
+    "javascript",
+    "neurosky",
+    "mindwave",
+    "mindwave mobile",    
+    "eeg",
+    "brainwave",
+    "bci"
+  ]
 }
