@@ -22,6 +22,13 @@ const EEG_POWER = 0x81 /* 32 byte for 8 wave types */
 const ASIC_EEG_POWER = 0x83 /* 24 byte for 8 wave types */
 const PRINTERVAL = 0x86 /* 2 byte representing miliseonds betwee r peaks */
 
+/* Command Bytes */
+const NORMAL_9600 = 0x00 /* 9600 and normal */
+const NORMAL_1200 = 0x01 /* 1200 and normal */
+const NORMAL_RAW_57600= 0x02 /* 57600 and raw */
+const NORMAL_FFT_57600= 0x03 /* 57600 and FFT */
+
+
 
 function parsePayload(payload) {
     let data = {};
@@ -88,6 +95,7 @@ function parsePayload(payload) {
         }
     }
 }
+
 function parsePacket(buffer) {
     if (buffer.length === 0) {
         return;
@@ -113,6 +121,7 @@ serialPort.open(function(error){
 serialPort.on('open', function(){
     let totalBuff = new Buffer(0);
     let lastSync = 0;
+    let sentCommand = false;
 
     function processBuff() {
         syncCheck:
@@ -128,7 +137,22 @@ serialPort.on('open', function(){
     }
 
     serialPort.on('data', function(buffer) {
+        if (!sentCommand) {
+            sentCommand = true;
+            sendCommand(NORMAL_FFT_57600);
+        }
         totalBuff = Buffer.concat([totalBuff, buffer]);
         processBuff();
     });
+
+    function sendCommand(command) {
+        var commandBuffer = new Buffer([command]);
+        serialPort.write(commandBuffer, (error) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('command sent!');
+            }
+        })
+    }
 })
