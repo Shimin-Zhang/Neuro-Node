@@ -12,17 +12,19 @@
   },
   "license": "BSD",
   "devDependencies": {
-    "serialport": "^3.6.0",
+    "serialport": "^2.0.6",
+    "websocket": "^1.0.22"
   },
   "dependencies": {
-    "serialport": "^3.6.0",
+    "serialport": "^2.0.6",
+    "websocket": "^1.0.22"
   },
   "keywords": [
     "node",
     "javascript",
     "neurosky",
     "mindwave",
-    "mindwave mobile",    
+    "mindwave mobile",
     "eeg",
     "brainwave",
     "bci"
