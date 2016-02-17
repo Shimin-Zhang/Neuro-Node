@@ -26,6 +26,7 @@ The library allows for reading of all EEG data from the headsets as well as send
         console.log(error);
     });
 ```
+
 # Change Data Format
 ```javascript
     const NORMAL_FFT_57600 = 0x03;

@@ -1,6 +1,6 @@
 {
   "name": "neuro-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Yet another node module for working with NeuroSky headsets",
   "repository": {
     "type": "git",
@@ -13,11 +13,11 @@
   "license": "BSD",
   "devDependencies": {
     "serialport": "^2.0.6",
-    "websocket": "^1.0.22"
+    "websocket": "^1.0.22",
   },
   "dependencies": {
     "serialport": "^2.0.6",
-    "websocket": "^1.0.22"
+    "websocket": "^1.0.22",
   },
   "keywords": [
     "node",
