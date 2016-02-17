@@ -5,16 +5,13 @@
         <title>Mindwave Server Test</title>
     </head>
     <body>
-        <label for="signal">Headset Signal</label>
-        <span id="signal"></span>
-        <label for="heart-rate">Heart Rate</label>
-            <span id="heart-rate"></span>
-        <label for="attention">Attention</label>
-            <span id="attention"></span>
-        <label for="meditation">Meditation</label>
-            <span id="meditation"></span>
-        <label for="asic">Raw Values</label>
-            <span id="asic-eeg"></span>
+        <div class="line-chart">
+
+        </div>
         <script type="text/javascript" src="./index.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+        <script src="http://forio.com/tools/contour/contour.min.js"></script>
+        <link rel="stylesheet" href="http://forio.com/tools/contour/contour.min.css">        
     </body>
 </html>
