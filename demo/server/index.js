@@ -53,11 +53,11 @@ function filterAndRenderData() {
 }
 function createChart() {
     window.filters = {
-        'Alpha': false,
+        'Alpha': true,
         'Beta': true,
-        'delta': false,
-        'theta': false,
-        'Gamma': false,
+        'delta': true,
+        'theta': true,
+        'Gamma': true,
     };
     window.eegData = [
         {name: 'delta', data: []},
