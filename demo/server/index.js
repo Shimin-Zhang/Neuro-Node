@@ -1,4 +1,6 @@
 'use strict';
+const WAVE_TYPES = ['delta', 'theta', 'lowAlpha','highAlpha', 'lowBeta', 'highBeta', 'lowGamma', 'midGamma'];
+
 function startSocket() {
     const websocketEndpoint = 'ws://localhost:8080';
     const protocal = 'echo-protocol';
@@ -20,43 +22,88 @@ function startSocket() {
     };
 }
 function updateChartData(data) {
-    ['delta', 'theta', 'lowAlpha','highAlpha', 'lowBeta', 'highBeta', 'lowGamma', 'midGamma'].forEach((name) => {
-        let dataArray = window.eegData.find((eeg) => {
-            return eeg.name === name;
-        }).data;
+    WAVE_TYPES.forEach((name) => {
+        let dataArray = findDataArray(name);
         dataArray.push(data[name]);
     });
-    window.chart.setData(window.eegData).render();
+    filterAndRenderData();
+}
+
+function findDataArray(waveName){
+    return window.eegData.find((eeg) => {
+        return eeg.name === waveName;
+    }).data;
+}
+
+function filterAndRenderData() {
+    let chartData = [];
+    WAVE_TYPES.forEach((name) => {
+        let filterName = Object.keys(window.filters).find((filter) => {
+            return name.search(filter) !== -1;
+        });
+        let dataArray = findDataArray(name);
+        if (window.filters[filterName]) {
+            chartData.push({
+                name: name,
+                data: dataArray
+            });
+        }
+    });
+    window.chart.setData(chartData).render();
 }
 function createChart() {
-        window.eegData = [
-            {name: 'delta', data: []},
-            {name: 'theta', data: []},
-            {name: 'lowAlpha', data: []},
-            {name: 'highAlpha', data: []},
-            {name: 'lowBeta', data: []},
-            {name: 'highBeta', data: []},
-            {name: 'lowGamma', data: []},
-            {name: 'midGamma', data: []},
-        ];
-        window.chart = new Contour({
-                el: '.line-chart',
-                xAxis: {
-                    type: 'linear'
-                },
-                yAxis: {
-                    title: 'value'
-                },
-                legend: {
-                    vAlign: 'top',
-                    hAlign: 'left'
-                }
-            })
-            .cartesian()
-            .line(window.eegData)
-            .legend(window.eegData)
-            .tooltip()
-            .render();
+    window.filters = {
+        'Alpha': false,
+        'Beta': true,
+        'delta': false,
+        'theta': false,
+        'Gamma': false,
+    };
+    window.eegData = [
+        {name: 'delta', data: []},
+        {name: 'theta', data: []},
+        {name: 'lowAlpha', data: []},
+        {name: 'highAlpha', data: []},
+        {name: 'lowBeta', data: []},
+        {name: 'highBeta', data: []},
+        {name: 'lowGamma', data: []},
+        {name: 'midGamma', data: []},
+    ];
+    window.chart = new Contour({
+        el: '.line-chart',
+        xAxis: {
+            type: 'linear'
+        },
+        yAxis: {
+            title: 'value'
+        },
+        legend: {
+            vAlign: 'top',
+            hAlign: 'left'
+        },
+        chart: {
+            height: 600
+        }
+    })
+    .cartesian()
+    .line(window.eegData)
+    .legend(window.eegData)
+    .tooltip()
+    .render();
+}
+
+function toggleWave(type) {
+    window.filters[type] = !window.filters[type];
+    filterAndRenderData();
+}
+
+function createListeners() {
+    document.getElementById('alpha').addEventListener('click', toggleWave.bind(this, 'Alpha'));
+    document.getElementById('beta').addEventListener('click', toggleWave.bind(this, 'Beta'));
+    document.getElementById('delta').addEventListener('click', toggleWave.bind(this, 'delta'));
+    document.getElementById('gamma').addEventListener('click', toggleWave.bind(this, 'Gamma'));
+    document.getElementById('theta').addEventListener('click', toggleWave.bind(this, 'theta'));
 }
 document.addEventListener('DOMContentLoaded', startSocket);
 document.addEventListener('DOMContentLoaded', createChart);
+document.addEventListener('DOMContentLoaded', createListeners);
